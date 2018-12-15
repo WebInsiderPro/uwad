@@ -1,0 +1,50 @@
+$body__min_width: 370px;
+$body__font_size: 16px;
+$body__line_height: 1.5;
+$body__color: #444;
+$body__background_color: #fff;
+$body__font_family: Roboto_PSM, sans-serif;
+
+$headings_font_family: Oswald_PSM, $body__font_family;
+
+$link__color: #42b983;
+$link__hover_color: darken($link__color, 5%);
+$link__active_color: darken($link__color, 10%);
+$link__visited_color: $link__color;
+
+$columns: 12;
+$column_rows: 3;
+$gutter: 20px;
+
+$xs: 0;
+$sm: 576px;
+$md: 768px;
+$lg: 992px;
+$xl: 1200px;
+
+$grid-breakpoints: (
+  xs: $xs,
+  sm: $sm,
+  md: $md,
+  lg: $lg,
+  xl: $xl
+) !default;
+
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px
+) !default;
+
+$aligns: (
+  c: auto,                // center
+  tl: 0 auto auto 0,      // top-left
+  tc: 0 auto auto,        // top-center
+  tr: 0 0 auto auto,      // top-right
+  cl: auto 0 auto 0,      // center-left
+  cr: auto 0 auto auto,   // center-right
+  bl: auto auto 0 0,      // bottom-left
+  bc: auto auto 0 auto,   // bottom-center
+  br: auto 0 0 auto       // bottom-right
+) !default;

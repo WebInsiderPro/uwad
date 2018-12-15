@@ -1,0 +1,109 @@
+@mixin make-container() {
+  width: 100%;
+  padding-right: ($gutter / 2);
+  padding-left: ($gutter / 2);
+  margin-right: auto;
+  margin-left: auto;
+}
+
+@mixin make-container-max-widths($max-widths: $container-max-widths, $breakpoints: $grid-breakpoints) {
+  @each $breakpoint, $container-max-width in $max-widths {
+    @include media-breakpoint-up($breakpoint, $breakpoints) {
+      max-width: $container-max-width;
+    }
+  }
+}
+
+@mixin calculate-columns-width($container-max-width) {
+  @if($container-max-width) {
+    grid-template-columns: repeat($columns, ($container-max-width - $gutter * ($columns - 1)) / $columns);
+  }
+}
+
+@mixin make-row-grid($max-widths: $container-max-widths, $breakpoints: $grid-breakpoints) {
+  grid-template-columns: repeat($columns, 1fr);
+}
+
+@mixin make-row() {
+  display: grid;
+  &.gap-x {
+    grid-column-gap: $gutter;
+  }
+  &.gap-y {
+    grid-row-gap: $gutter;
+  }
+}
+
+@mixin make-col($from, $to: 0) {
+  @if ($to > 0) {
+    grid-column: #{$from}/#{$to+1};
+  }
+  @else {
+    grid-column: $from;
+  }
+}
+
+@mixin make-grid-columns($columns: $columns, $gutter: $gutter, $breakpoints: $grid-breakpoints) {
+  [class^=c-] {
+    position: relative;
+    width: 100%;
+    min-height: 1px;
+    grid-column: #{1}/#{$columns+1};
+  }
+  [class*=align-] {
+    display: grid;
+  }
+
+  @each $breakpoint in map-keys($breakpoints) {
+    $infix: breakpoint-infix($breakpoint, $breakpoints);
+
+    @include media-breakpoint-up($breakpoint, $breakpoints) {
+      @for $i from 1 through $columns {
+        @for $j from 1 through $columns {
+          .c#{$infix}-#{$i}-#{$j} {
+            @if ($i <= $j) {
+              @include make-col($i, $j);
+            }
+          }
+        }
+      }
+
+      @for $i from 1 through $column_rows {
+        @for $j from 1 through $column_rows {
+          .row#{$infix}-#{$i}-#{$j} {
+            @if ($i <= $j) {
+              @if ($i != $j) {
+                grid-row: $i/#{$j+1};
+              }
+            }
+          }
+          .row#{$infix}-#{$i} {
+            @if ($i <= $j) {
+              grid-row: $i;
+            }
+          }
+        }
+      }
+
+      @each $name, $align in $aligns {
+        .align#{$infix}-#{$name} {
+          > * {
+            margin: $align;
+          }
+        }
+      }
+    }
+  }
+}
+
+@mixin make-aligns($breakpoints: $grid-breakpoints) {
+  @each $breakpoint in map-keys($breakpoints) {
+    $infix: breakpoint-infix($breakpoint, $breakpoints);
+
+    @each $name, $align in $aligns {
+      .align-self#{$infix}-#{$name} {
+        margin: $align;
+      }
+    }
+  }
+}
