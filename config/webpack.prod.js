@@ -124,7 +124,12 @@ if (process.env.NODE_ENV === 'production') {
       },
     }),
     new UglifyJsPlugin({
-      sourceMap: false
+      sourceMap: false,
+      uglifyOptions: {
+        output: {
+          comments: false
+        }
+      }
     }),
     new webpack.LoaderOptionsPlugin({
       minimize: true,

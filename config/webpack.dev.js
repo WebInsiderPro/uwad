@@ -11,29 +11,28 @@ module.exports = {
     publicPath: 'http://127.0.0.1:9000/static/',
     filename: 'build.js'
   },
-    module: {
-    rules: [
-      {
-        test: /\.css$/,
+  module: {
+    rules: [{
+      test: /\.css$/,
         use: [
           'vue-style-loader',
-          'css-loader'
+          {loader: "css-loader", options: { sourceMap: true }},
         ]
       },
       {
         test: /\.scss$/,
         use: [
           'vue-style-loader',
-          'css-loader',
-          'sass-loader'
+          {loader: "css-loader", options: { sourceMap: true }},
+          {loader: "sass-loader", options: { sourceMap: true }},
         ],
       },
       {
         test: /\.sass$/,
         use: [
           'vue-style-loader',
-          'css-loader',
-          'sass-loader?indentedSyntax'
+          {loader: "css-loader", options: { sourceMap: true }},
+          {loader: "sass-loader?indentedSyntax", options: { sourceMap: true }}
         ],
       },
       {
@@ -46,13 +45,13 @@ module.exports = {
             // other preprocessors should work out of the box, no loader config like this necessary.
             'scss': [
               'vue-style-loader',
-              'css-loader',
-              'sass-loader'
+              {loader: "css-loader", options: { sourceMap: true }},
+              {loader: "sass-loader", options: { sourceMap: true }}
             ],
             'sass': [
               'vue-style-loader',
-              'css-loader',
-              'sass-loader?indentedSyntax'
+              {loader: "css-loader", options: { sourceMap: true }},
+              {loader: "sass-loader?indentedSyntax", options: { sourceMap: true }},
             ]
           }
           // other vue-loader options go here
@@ -72,19 +71,21 @@ module.exports = {
       }
     ]
   },
-    plugins: [
-      new CleanWebpackPlugin([path.resolve(__dirname, '../dist')], {
-        root: process.cwd()
-      }),
-      new VueLoaderPlugin(),
-      new BundleTracker({filename: './webpack-stats.json'}),
-      new webpack.ProvidePlugin({
-        $: 'jquery',
-        jQuery: 'jquery',
-        'window.jQuery': 'jquery'
-      })
-    ],
-    resolve: {
+  plugins: [
+    new CleanWebpackPlugin([path.resolve(__dirname, '../dist')], {
+      root: process.cwd()
+    }),
+    new VueLoaderPlugin(),
+    new BundleTracker({
+      filename: './webpack-stats.json'
+    }),
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery',
+      'window.jQuery': 'jquery'
+    })
+  ],
+  resolve: {
     alias: {
       'vue$': 'vue/dist/vue.esm.js'
     },
