@@ -1,10 +1,13 @@
 {
-  "name": "psm",
-  "description": "A Vue.js project",
+  "name": "uwad",
+  "description": "Django, Vue & Webpack mix for professional applications development.",
   "version": "1.0.0",
   "author": "awpd <shubenkin.alexander@gmail.com>",
   "license": "MIT",
-  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/awpd/uwad.git"
+  },
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --config config/webpack.dev.js --mode development --hot",
     "build": "cross-env NODE_ENV=production webpack --config config/webpack.prod.js --mode production --progress --hide-modules"
