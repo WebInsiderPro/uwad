@@ -1,0 +1,99 @@
+@each $n in map-keys($grid-breakpoints) {
+	@include media-breakpoint-up($n) {
+		$n: infix($n);
+		@for $s from 0 through $spacings {
+			.p#{$n}-#{$s} {
+				padding: $spacing-start * $s;
+			}
+			.pt#{$n}-#{$s} {
+				padding-top: $spacing-start * $s;
+			}
+			.pr#{$n}-#{$s} {
+				padding-right: $spacing-start * $s;
+			}
+			.pb#{$n}-#{$s} {
+				padding-bottom: $spacing-start * $s;
+			}
+			.pl#{$n}-#{$s} {
+				padding-left: $spacing-start * $s;
+			}
+			.px#{$n}-#{$s} {
+				padding-left: $spacing-start * $s;
+				padding-right: $spacing-start * $s;
+			}
+			.py#{$n}-#{$s} {
+				padding-top: $spacing-start * $s;
+				padding-bottom: $spacing-start * $s;
+			}
+			.m#{$n}-#{$s} {
+				margin: $spacing-start * $s;
+			}
+			.mt#{$n}-#{$s} {
+				margin-top: $spacing-start * $s;
+			}
+			.mr#{$n}-#{$s} {
+				margin-right: $spacing-start * $s;
+			}
+			.mb#{$n}-#{$s} {
+				margin-bottom: $spacing-start * $s;
+			}
+			.ml#{$n}-#{$s} {
+				margin-left: $spacing-start * $s;
+			}
+			.mx#{$n}-#{$s} {
+				margin-left: $spacing-start * $s;
+				margin-right: $spacing-start * $s;
+			}
+			.my#{$n}-#{$s} {
+				margin-top: $spacing-start * $s;
+				margin-bottom: $spacing-start * $s;
+			}
+		}
+		.no-p#{$n} {
+			padding: 0 !important;
+		}
+		.no-pt#{$n} {
+			padding-top: 0 !important;
+		}
+		.no-pr#{$n} {
+			padding-right: 0 !important;
+		}
+		.no-pb#{$n} {
+			padding-bottom: 0 !important;
+		}
+		.no-pl#{$n} {
+			padding-left: 0 !important;
+		}
+		.no-px#{$n} {
+			padding-left: 0 !important;
+			padding-right: 0 !important;
+		}
+		.no-py#{$n} {
+			padding-top: 0 !important;
+			padding-bottom: 0 !important;
+		}
+		.no-m#{$n} {
+			margin: 0 !important;
+		}
+		.no-mt#{$n} {
+			margin-top: 0 !important;
+		}
+		.no-mr#{$n} {
+			margin-right: 0 !important;
+		}
+		.no-mb#{$n} {
+			margin-bottom: 0 !important;
+		}
+		.no-ml#{$n} {
+			margin-left: 0 !important;
+		}
+		.no-mx#{$n} {
+			margin-left: 0 !important;
+			margin-right: 0 !important;
+		}
+		.no-my#{$n} {
+			margin-top: 0 !important;
+			margin-bottom: 0 !important;
+		}
+	}
+}

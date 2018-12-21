@@ -1,0 +1,10 @@
+@each $n in map-keys($grid-breakpoints) {
+	@include media-breakpoint-up($n) {
+		$n: infix($n);
+		@each $display in $displays {
+			.d#{$n}-#{$display} {
+				display: $display !important;
+			}
+		}
+	}
+}

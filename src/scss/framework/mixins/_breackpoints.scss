@@ -1,0 +1,29 @@
+@function breakpoint-min($name) {
+	$min: map-get($grid-breakpoints, $name);
+	@return if($min != 0, $min, null);
+}
+
+@mixin media-breakpoint-up($name) {
+	$min: breakpoint-min($name);
+	@if $min {
+	  @media (min-width: $min) {
+		@content;
+	  }
+	} @else {
+	  @content;
+	}
+  }
+
+@function infix($name) {
+	@return if(breakpoint-min($name) == null, "", "-#{$name}");
+}
+
+@function cols($from, $to) {
+	@if $from == $to {
+		@return $from;
+	}
+	@else if $from < $to {
+		@return '#{$from}-#{$to}';
+	}
+	@return '';
+}

@@ -1,0 +1,21 @@
+[class*=align-] {
+	display: grid;
+}
+
+@each $n in map-keys($grid-breakpoints) {
+	@include media-breakpoint-up($n) {
+		$n: infix($n);
+		@each $name, $align in $aligns {
+			.align#{$n}-#{$name} {
+				> * {
+					margin: $align;
+				}
+			}
+		}
+		@each $name, $align in $aligns {
+			.align-self#{$n}-#{$name} {
+				margin: $align;
+			}
+		}
+	}
+}

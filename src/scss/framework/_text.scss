@@ -1,0 +1,28 @@
+.text-justify  { text-align: justify !important; }
+.text-nowrap   { white-space: nowrap !important; }
+.text-truncate {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+@each $breakpoint in map-keys($grid-breakpoints) {
+	@include media-breakpoint-up($breakpoint) {
+		$n: infix($breakpoint);
+
+		.text#{$n}-left   { text-align: left !important; }
+		.text#{$n}-right  { text-align: right !important; }
+		.text#{$n}-center { text-align: center !important; }
+	}
+}
+
+.text-lowercase  { text-transform: lowercase !important; }
+.text-uppercase  { text-transform: uppercase !important; }
+.text-capitalize { text-transform: capitalize !important; }
+
+@each $w in (100, 200, 300, 400, 500, 600, 700, 800, 900) {
+	.font-weight-#{$w}  { font-weight: $w !important; }
+}
+
+.font-italic { font-style: italic !important; }
+.font-normal { font-style: normal !important; }

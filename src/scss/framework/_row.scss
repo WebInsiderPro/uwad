@@ -1,0 +1,14 @@
+.container > .row {
+	display: grid;
+	grid-template-columns: repeat($columns, 1fr);
+
+	&.gap {
+		grid-gap: $gutter;
+	}
+	&.gap-x {
+		grid-column-gap: $gutter;
+	}
+	&.gap-y {
+		grid-row-gap: $gutter;
+	}
+}
