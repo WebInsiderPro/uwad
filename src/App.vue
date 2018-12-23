@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <img src="./img/logo.png">
+    <img class="logo" alt="logo" src="./img/logo.svg">
     <h1>{{ msg }}</h1>
     <p>Unreal Web-Applications Development</p>
     <h2>Essential Links</h2>
@@ -31,7 +31,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 #app {
   text-align: center;
   color: #2c3e50;
@@ -52,7 +52,7 @@ li {
   margin: 0 10px;
 }
 
-a {
-  color: #42b983;
+img.logo {
+  max-width: 200px;
 }
 </style>

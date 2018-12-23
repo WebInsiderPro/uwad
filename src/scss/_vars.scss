@@ -2,7 +2,7 @@ $body__min_width: 370px;
 $body__font_size: 16px;
 $body__line_height: 1.5;
 $body__color: #444;
-$body__background_color: #fff;
+$body__background_color: #f7f7f7;
 $body__font_family: Roboto_UWAD, sans-serif;
 
 $headings_font_family: Oswald_UWAD, $body__font_family;
@@ -13,15 +13,28 @@ $color__accent: #ff8f00;
 $color__second: #bdd3de;
 
 $colours: (
-  'main': $color__main,
-  'accent': $color__accent,
-  'second': $color__second,
+  main: $color__main,
+  accent: $color__accent,
+  second: $color__second,
 );
 
 $link__color: $color__accent;
 $link__hover_color: darken($link__color, 5%);
 $link__active_color: darken($link__color, 10%);
 $link__visited_color: $link__color;
+
+$button__rounded: 3px;
+$button__font_weight: 400;
+$button__border: 1px solid rgba(#000, .1);
+$button__border_side: border;
+$button__box_shadow: 2px 2px 6px rgba(#000, .1);
+$button__outline_border_width: 2px;
+$button__text_transform: normal;
+$button__sizes: (
+  '': (padding: 5px 25px, font-size: 16px),   // Default
+  sm: (padding: 3px 15px, font-size: 14px),   // Small
+  lg: (padding: 8px 35px, font-size: 18px)    // Large
+) !default;
 
 $columns: 12;
 $rows: 3;
