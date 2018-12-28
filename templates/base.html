@@ -1,4 +1,4 @@
-<!DOCTYPE html>{% load render_bundle from webpack_loader %}{% load webpack_static from webpack_loader %}{% load static %}
+<!DOCTYPE html>{% load render_bundle from webpack_loader %}{% load webpack_static from webpack_loader %}
 <html lang="en">
     <head>
         <!-- Charset -->
@@ -24,12 +24,14 @@
         <link rel="apple-touch-icon" sizes="180x180" href="{% webpack_static 'apple-touch-icon.png' %}">
         <link rel="icon" type="image/png" sizes="32x32" href="{% webpack_static 'favicon-32x32.png' %}">
         <link rel="icon" type="image/png" sizes="16x16" href="{% webpack_static 'favicon-16x16.png' %}">
+        <link rel="manifest" href="{% webpack_static 'site.webmanifest' %}">
         <link rel="mask-icon" href="{% webpack_static 'safari-pinned-tab.svg' %}" color="#5bbad5">
         <link rel="shortcut icon" href="{% webpack_static 'favicon.ico' %}">
-        <meta name="msapplication-TileColor" content="#00aba9">
+        <meta name="msapplication-TileColor" content="#da532c">
+        <meta name="msapplication-config" content="{% webpack_static 'browserconfig.xml' %}">
 
         <!-- Theme Color -->
-        <meta name="theme-color" content="#000">
+        <meta name="theme-color" content="#ffffff">
     </head>
     <body class="{% block body_class %}{% endblock %}">
 

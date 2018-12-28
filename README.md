@@ -17,12 +17,11 @@ python -m venv venv
 For Linux/Mac:
 ```
 python3 -m venv venv
-source venv/bin/Activate
+source venv/bin/activate
 ```
 
 Then:
 ```
-pip install django
 pip install -r req.txt
 django-admin startproject app .
 python manage.py startapp app_name
