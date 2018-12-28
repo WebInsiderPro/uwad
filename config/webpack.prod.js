@@ -3,7 +3,7 @@ let webpack = require('webpack')
 let BundleTracker = require('webpack-bundle-tracker')
 let VueLoaderPlugin = require('vue-loader/lib/plugin')
 let CleanWebpackPlugin = require('clean-webpack-plugin')
-let UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+let TerserPlugin = require('terser-webpack-plugin')
 let MiniCssExtractPlugin = require('mini-css-extract-plugin')
 let OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin")
 
@@ -123,11 +123,12 @@ if (process.env.NODE_ENV === 'production') {
         preset: ['default', { discardComments: { removeAll: true } }],
       },
     }),
-    new UglifyJsPlugin({
-      sourceMap: false,
-      uglifyOptions: {
+    new TerserPlugin({
+      terserOptions: {
+        sourceMap: false,
+        ecma: 8,
         output: {
-          comments: false
+          comments: false,
         }
       }
     }),

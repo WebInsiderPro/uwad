@@ -8,6 +8,10 @@ import './img/site.webmanifest'
 import './img/safari-pinned-tab.svg'
 import './img/favicon.ico'
 import './img/browserconfig.xml'
+import './img/mstile-150x150.png'
+import './img/android-chrome-192x192.png'
+import './img/android-chrome-512x512.png'
+import './img/share.jpg'
 
 import './scss/main.scss'
 
