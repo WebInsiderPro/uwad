@@ -3,7 +3,7 @@
 		$n: infix($n);
 		@each $prop, $abbrev in (width: w, height: h) {
 			@each $size, $length in $sizes {
-				.#{$abbrev}#{n}-#{$size} { #{$prop}: $length !important; }
+				.#{$abbrev}#{$n}-#{$size} { #{$prop}: $length !important; }
 				.m#{$abbrev}#{$n}-#{$size} { max-#{$prop}: $length !important; }
 			}
 		}
