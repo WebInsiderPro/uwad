@@ -29,7 +29,7 @@ $button__border: 1px solid rgba(#000, .1);
 $button__border_side: border;
 $button__box_shadow: 2px 2px 6px rgba(#000, .1);
 $button__outline_border_width: 2px;
-$button__text_transform: normal;
+$button__text_transform: none;
 $button__sizes: (
   '': (padding: 5px 25px, font-size: 16px),   // Default
   sm: (padding: 3px 15px, font-size: 14px),   // Small
