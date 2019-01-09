@@ -9,7 +9,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
         <!-- Standard Title -->
-        <title>{% block title %}UWAD{% endblock %} ‒ Project Name</title>
+        <title>{% block title %}Home{% endblock %} ‒ {% if request.path == '/' %}Unreal Web-Applications Development{% else %}UWAD{% endif %}</title>
 
         <!-- SEO -->
         <meta name="description" content="{% block description %}{% endblock %}">
