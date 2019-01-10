@@ -15,12 +15,22 @@
 		border-color: $value !important;
 		&-dark {
 			border-color: darken($value, 10%) !important;
+        }
+        &-light {
+			border-color: lighten($value, 10%) !important;
 		}
   }
-}
-
-.border-white {
-  border-color: white !important;
+  .border-hover-#{$color} {
+		&:hover {
+      border-color: $value !important;
+    }
+		&-dark:hover {
+			border-color: darken($value, 10%) !important;
+    }
+    &-light:hover {
+			border-color: lighten($value, 10%) !important;
+		}
+  }
 }
 
 //
@@ -51,10 +61,51 @@
   border-radius: 50% !important;
 }
 
-.rounded-circle-corners {
-  border-radius: 10em !important;
+@for $r from 1 through $rounded-circle-corners {
+  .rounded-circle-corners-#{$r} {
+    border-radius: #{$r}em !important;
+  }
 }
 
 .rounded-0 {
+  border-radius: 0 !important;
+}
+
+
+//
+// Border-radius on hover effect
+//
+
+.rounded-hover:hover {
+  border-radius: $border-radius !important;
+}
+.rounded-hover-top:hover {
+  border-top-left-radius: $border-radius !important;
+  border-top-right-radius: $border-radius !important;
+}
+.rounded-hover-right:hover {
+  border-top-right-radius: $border-radius !important;
+  border-bottom-right-radius: $border-radius !important;
+}
+.rounded-hover-bottom:hover {
+  border-bottom-right-radius: $border-radius !important;
+  border-bottom-left-radius: $border-radius !important;
+}
+.rounded-hover-left:hover {
+  border-top-left-radius: $border-radius !important;
+  border-bottom-left-radius: $border-radius !important;
+}
+
+.rounded-hover-circle:hover {
+  border-radius: 50% !important;
+}
+
+@for $r from 1 through $rounded-circle-corners {
+  .rounded-hover-circle-corners-#{$r}:hover {
+    border-radius: #{$r}em !important;
+  }
+}
+
+.rounded-hover-0:hover {
   border-radius: 0 !important;
 }

@@ -8,13 +8,13 @@
 		@each $name, $align in $aligns {
 			.align#{$n}-#{$name} {
 				> * {
-					margin: $align;
+					margin: $align !important;
 				}
 			}
 		}
 		@each $name, $align in $aligns {
 			.align-self#{$n}-#{$name} {
-				margin: $align;
+				margin: $align !important;
 			}
 		}
 	}

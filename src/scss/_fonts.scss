@@ -1,4 +1,4 @@
-@include font-face("Oswald_UWAD", "../fonts/Oswald/Oswald-Bold", bold);
+@include font-face('OpenSans-Ex', '../fonts/OpenSans/OpenSans-SemiBold');
 
-@include font-face("Roboto_UWAD", "../fonts/Roboto/Roboto-Regular");
-@include font-face("Roboto_UWAD", "../fonts/Roboto/Roboto-Bold", bold);
+@include font-face('Roboto-Ex', '../fonts/Roboto/Roboto-Regular');
+@include font-face('Roboto-Ex', '../fonts/Roboto/Roboto-Medium', 600);

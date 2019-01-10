@@ -9,9 +9,13 @@
 			.bg#{$n}-#{$name} {
 				background-color: $hex !important;
 			}
-		}
-		.bg#{$n}-white {
-			background-color: white !important;
+			.text-hover#{$n}-#{$name}:hover {
+				color: $hex !important;
+			}
+		
+			.bg-hover#{$n}-#{$name}:hover {
+				background-color: $hex !important;
+			}
 		}
 		
 		.bg#{$n}-transparent {

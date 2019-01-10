@@ -1,59 +1,64 @@
 .btn {
-  display: inline-flex;
-  text-decoration: none;
-  background-color: #f0f0f0;
-  border-radius: $button__rounded;
-  line-height: 1em !important;
-  white-space: nowrap;
-  text-align: center;
-  text-transform: $button__text_transform;
-  box-shadow: $button__box_shadow;
-  #{$button__border_side}: $button__border;
-  font-weight: $button__font_weight;
-  user-select: none;
-  &, &:visited {
-    color: $body__color;
-  }
-  &:active {
-    box-shadow: none;
-  }
-  @each $name, $map in $button__sizes {
-    @if $name == '' {
-      padding: map_get($map, padding);
-      font-size: map_get($map, font-size);
+    display: inline-flex;
+    text-decoration: none;
+    background-color: #f0f0f0;
+    border-radius: $button__rounded;
+    line-height: 1em !important;
+    white-space: nowrap;
+    text-align: center;
+    text-transform: $button__text_transform;
+    box-shadow: $button__box_shadow;
+    #{$button__border_side}: $button__border;
+    font-weight: $button__font_weight;
+    user-select: none;
+    transition: color $transition, background-color $transition;
+    &, &:visited {
+      color: $body__color;
     }
-    @else {
-      &-#{$name} {
+    &:active {
+      box-shadow: none;
+    }
+    @each $name, $map in $button__sizes {
+      @if $name == '' {
         padding: map_get($map, padding);
         font-size: map_get($map, font-size);
       }
-    }
-  }
-  @each $color, $hex in $colours {
-    &-#{$color} {
-      &, &:visited {
-        @include contrast($hex);
-      }
-      background-color: $hex;
-    }
-  }
-  &-outline {
-    box-shadow: none !important;
-    border-width: $button__outline_border_width !important;
-    background-color: transparent;
-    @each $color, $hex in $colours {
-      &.btn-#{$color} {
-        &, &:visited {
-          color: $hex !important;
-          border-color: $hex !important;
+      @else {
+        &-#{$name} {
+          padding: map_get($map, padding);
+          font-size: map_get($map, font-size);
         }
       }
-      &:active {
-        box-shadow: inset 2px 2px 3px rgba(darken($hex, 20%), .2) !important;
+    }
+    @each $color, $hex in $colours {
+      &-#{$color} {
+        &, &:visited {
+          @include contrast($hex);
+        }
+        background-color: $hex;
       }
     }
-    .ripple {
-      display: none !important;
+    &-outline {
+      box-shadow: none !important;
+      border-width: $button__outline_border_width !important;
+      background-color: transparent;
+      @each $color, $hex in $colours {
+        &.btn-#{$color} {
+          &, &:visited {
+            color: $hex !important;
+            border-color: $hex !important;
+          }
+          &:hover {
+              background-color: $hex;
+              @include contrast($hex, true);
+          }
+        }
+        &:active {
+          box-shadow: inset 2px 2px 3px rgba(darken($hex, 20%), .2) !important;
+        }
+      }
+      .ripple {
+        display: none !important;
+      }
     }
   }
-}

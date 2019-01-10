@@ -1,0 +1,29 @@
+.row {
+    display: grid;
+
+    &.gap {
+        grid-gap: 20px;
+    }
+
+    &.gap-x {
+        grid-column-gap: 20px;
+    }
+
+    &.gap-y {
+        grid-row-gap: 20px;
+    }
+
+    @each $bp in map-keys($grid-breakpoints) {
+        @include media-breakpoint-up($bp) {
+
+            @for $i from 1 through $columns {
+
+                &.#{$bp}#{$i} {
+                    grid-template-columns: repeat(#{$i}, minmax(0, 1fr));
+                }
+
+            }
+
+        }
+    }
+}

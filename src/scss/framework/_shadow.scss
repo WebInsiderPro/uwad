@@ -1,0 +1,16 @@
+@each $n in map-keys($grid-breakpoints) {
+	@include media-breakpoint-up($n) {
+		$n: infix($n);
+		@each $name, $align in $aligns {
+			.shadow#{$n}-sm { box-shadow: $box-shadow-sm !important; }
+			.shadow#{$n} { box-shadow: $box-shadow !important; }
+			.shadow#{$n}-lg { box-shadow: $box-shadow-lg !important; }
+			.shadow#{$n}-none { box-shadow: none !important; }
+
+			.shadow#{$n}-hover-sm:hover { box-shadow: $box-shadow-sm !important; }
+			.shadow#{$n}-hover:hover { box-shadow: $box-shadow !important; }
+			.shadow#{$n}-hover-lg:hover { box-shadow: $box-shadow-lg !important; }
+			.shadow#{$n}-hover-none:hover { box-shadow: none !important; }
+		}
+	}
+}

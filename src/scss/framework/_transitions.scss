@@ -1,0 +1,18 @@
+@each $n in map-keys($grid-breakpoints) {
+	@include media-breakpoint-up($n) {
+		$n: infix($n);
+		.transition#{$n} {
+			transition: $transition;
+		}
+		.transition-links#{$n} {
+			a {
+				transition: $transition;
+			}
+		}
+		.transition-children#{$n} {
+			> * {
+				transition: $transition;
+			}
+		}
+	}
+}
