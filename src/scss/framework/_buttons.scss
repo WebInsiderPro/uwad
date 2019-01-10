@@ -33,7 +33,7 @@
 	@each $color, $hex in $colours {
 		&-#{$color} {
 			&, &:visited {
-				@include contrast($hex);
+				@include contrast($hex, true);
 			}
 			background-color: $hex;
 		}

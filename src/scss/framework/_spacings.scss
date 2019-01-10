@@ -27,26 +27,49 @@
 			}
 			.m#{$n}-#{$s} {
 				margin: $spacing-start * $s;
+				&-negative {
+					margin: -($spacing-start * $s);
+				}
 			}
 			.mt#{$n}-#{$s} {
 				margin-top: $spacing-start * $s;
+				&-negative {
+					margin-top: -($spacing-start * $s);
+				}
 			}
 			.mr#{$n}-#{$s} {
 				margin-right: $spacing-start * $s;
+				&-negative {
+					margin-right: -($spacing-start * $s);
+				}
 			}
 			.mb#{$n}-#{$s} {
 				margin-bottom: $spacing-start * $s;
+				&-negative {
+					margin-bottom: -($spacing-start * $s);
+				}
 			}
 			.ml#{$n}-#{$s} {
 				margin-left: $spacing-start * $s;
+				&-negative {
+					margin-left: -($spacing-start * $s);
+				}
 			}
 			.mx#{$n}-#{$s} {
 				margin-left: $spacing-start * $s;
 				margin-right: $spacing-start * $s;
+				&-negative {
+					margin-left: -($spacing-start * $s);
+					margin-right: -($spacing-start * $s);
+				}
 			}
 			.my#{$n}-#{$s} {
 				margin-top: $spacing-start * $s;
 				margin-bottom: $spacing-start * $s;
+				&-negative {
+					margin-top: -($spacing-start * $s);
+					margin-bottom: -($spacing-start * $s);
+				}
 			}
 		}
 		.no-p#{$n} {
