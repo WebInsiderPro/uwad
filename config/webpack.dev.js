@@ -12,7 +12,12 @@ module.exports = {
     filename: 'build.js'
   },
   module: {
-    rules: [{
+    rules: [
+      {
+      test: /\.html$/,
+        use: ['html-loader']
+      },
+      {
       test: /\.css$/,
         use: [
           'vue-style-loader',

@@ -1,22 +1,20 @@
-@mixin contrast($color, $important: false) {
-	$color-brightness: round((red($color) * 299) + (green($color) * 587) + (blue($color) * 114) / 1000);
-	$light-color: round((red(#ffffff) * 299) + (green(#ffffff) * 587) + (blue(#ffffff) * 114) / 1000);
+// Calculate brightness value
+@function brightness($color) {
+  @return (red($color) + green($color) + blue($color)) / (255 * 3);
+}
 
-	@if abs($color-brightness) < ($light-color/2){
-		@if $important {
-			color: white !important;
-		}
-		@else {
-			color: white;
-		}
-	}
+// Calculate brightness ratio
+// to base color
+@function brightness_ratio($base, $color) {
+  @return abs(brightness($base) - brightness($color));
+}
 
-	@else {
-		@if $important {
-			color: $body__color !important;
-		}
-		@else {
-			color: $body__color;
-		}
-	}
+// Compare colors to higher contrast
+@function contrast($base, $color1: white, $color2: black) {
+  @return if(brightness_ratio($base, $color1) > brightness_ratio($base, $color2), $color1, $color2);
+}
+
+// Compare colors to lower contrast (inverting the former contrast function)
+@function invert-contrast($base, $color1: white, $color2: black) {
+  @return if(brightness_ratio($base, $color1) > brightness_ratio($base, $color2), $color2, $color1);
 }

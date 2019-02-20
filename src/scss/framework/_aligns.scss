@@ -1,4 +1,4 @@
-[class*=align-] {
+[class*=align-]:not([class*=align-self-]) {
 	display: grid;
 }
 

@@ -77,6 +77,15 @@ module.exports = {
         options: {
           name: '[name].[ext]?[hash]'
         }
+      },
+      {
+        test: /\.html$/,
+        use: ['html-loader', {
+          loader: 'file-loader',
+          options: {
+            name: '../[path][name].[ext]'
+          }
+        }],
       }
     ]
   },

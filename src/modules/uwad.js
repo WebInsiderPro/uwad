@@ -1,4 +1,288 @@
-exports.declension = (num, ...words) => {
+class YT {
+
+  constructor(API_KEY) {
+
+    this.API_KEY = API_KEY
+    this.channels = {}
+
+    this.video_render()
+
+  }
+
+
+  video(url, callback = () => {}) {
+
+    let id = YT.get_video_id(url)
+    url = `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics&id=${id}&key=${this.API_KEY}`
+
+    fetch(url).then((response) => {
+      return response.json()
+    }).then((data) => {
+      let video = data.items[0]
+      video.embed = `https://www.youtube.com/embed/${id}`
+      video.url = `https://www.youtube.com/watch?v=${id}`
+      this.channel(video['snippet']['channelId'], (channel) => {
+        callback({ channel, video })
+      })
+    }).catch((Err) => {
+      console.log(Err)
+    })
+
+  }
+
+
+  channel(id, callback = () => {}) {
+
+    if (typeof this.channels[id] === 'object') return callback(this.channels[id])
+
+    let url = `https://www.googleapis.com/youtube/v3/channels?part=snippet,contentDetails,statistics&id=${id}&key=${this.API_KEY}`
+
+    fetch(url).then((response) => {
+      return response.json()
+    }).then((data) => {
+      let channel = data.items[0]
+      channel.url = `https://www.youtube.com/channel/${id}`
+      this.channels[channel.id] = channel
+      return callback(channel)
+    }).catch((Err) => {
+      console.log(Err)
+    })
+
+  }
+
+
+  video_render() {
+
+    let v_blocks = document.querySelectorAll('[data-yt]')
+
+    if (v_blocks) v_blocks.forEach((el) => {
+
+      let url = el.dataset.yt
+
+      if (!url) {
+        el.innerHTML = '<strong style="color: tomato">Insert video URL to [data-yt] attribute</strong>'
+        return delete el.dataset.yt
+      }
+
+      this.video(url, (r) => {
+
+        // For Debug
+        if (el.innerHTML.match(/{!}/gi)) {
+          el.innerHTML = el.innerHTML.replace(/{!}/gi, `<code>${JSON.stringify(r)}</code>`)
+        }
+
+        let regexp = /(\[\[)[a-z.]+(]])/gi
+        let matches = el.innerHTML.match(regexp)
+
+        if (matches) matches.forEach(match => {
+
+          let _regexp = /([a-z.])+/gi
+          let keys = match.match(_regexp)
+
+          if (keys) keys.forEach(key => {
+
+            let key_parts = key.split('.')
+            let replace_key = `[[${key}]]`
+
+            let cnt = this.get_value(r, key_parts)
+
+            // Render to HTML
+            if (cnt) {
+
+              // Convert Tags to Links
+              if (key.match('tags') !== null) {
+                let cnt_str = ''
+                cnt.forEach(tag => {
+                  cnt_str += ` <a href="https://www.youtube.com/results?search_query=${tag.replace(/\s/g, '+')}" target="_blank"><span>#</span>${tag}</a>`
+                })
+                // Remove First Space
+                cnt = cnt_str.replace(' ', '')
+              }
+
+              if (typeof cnt === 'string') {
+
+                // Links as Html
+                if (replace_key.toLowerCase().match(/description/)) {
+
+                  // URLs
+                  let url_regex = /(?:(?:https?|ftp):\/\/)(?:\S+(?::\S*)?@)?(?:(?!10(?:\.\d{1,3}){3})(?!127(?:\.​\d{1,3}){3})(?!169\.254(?:\.\d{1,3}){2})(?!192\.168(?:\.\d{1,3}){2})(?!172\.(?:1[​6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1​,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00​a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]+-?)*[a-z\u​00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/[^\s]*)?/ig
+                  cnt = cnt.replace(url_regex, (m) => {
+                    return `<a href="${m}" target="_blank">${m}</a>`
+                  })
+
+                  // Emails
+                  let email_regex = /(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/ig
+                  cnt = cnt.replace(email_regex, (m) => {
+                    return `<a href="mailto:${m}">${m}</a>`
+                  })
+
+                  // HashTags
+                  let hash_regex = /(#[a-zа-я]+)/gi
+                  cnt = cnt.replace(hash_regex, (m) => {
+                    return `<a href="https://www.youtube.com/results?search_query=${m.replace('#', '%23')}" target="_blank"">${m}</a>`
+                  })
+                }
+
+                // Break Lines
+                cnt = cnt.replace(/\n/g, '<br>')
+              }
+
+              // Render Object
+              else if (typeof cnt === 'object') cnt = `<code>${JSON.stringify(cnt)}</code>`
+
+
+              // Render finally
+              el.innerHTML = el.innerHTML.replace(replace_key, cnt)
+            }
+
+          })
+
+        })
+
+
+        // Set Images
+        el.querySelectorAll('[data-img]').forEach((img) => {
+          let node = document.createElement('img')
+          for (let i = 0; i < img.attributes.length; i++) {
+            let attr = img.attributes[i]
+            let name = attr.name
+            if (name === 'data-img') name = 'src'
+            node.setAttribute(name, attr.value)
+          }
+          img.replaceWith(node)
+        })
+
+
+        // Set Backgrounds
+        el.querySelectorAll('[data-bg]').forEach((div) => {
+          let src = div.dataset.bg
+          delete div.dataset.bg
+          div.style.backgroundImage = `url(${src})`
+        })
+
+
+        // Set Player or Play by click the Preview
+        let player = `<iframe src="${r.video.embed}?autoplay=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`
+        let autoplay = `<iframe src="${r.video.embed}?autoplay=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`
+
+        let play = el.querySelector('[data-play]')
+        let video = el.querySelector('[data-video]')
+
+        if (play) {
+          play.innerHTML = '<span class="play-button"></span>'
+          play.addEventListener('click', (e) => {
+            e.preventDefault()
+            play.innerHTML = autoplay
+          })
+        }
+
+        if (video) video.innerHTML = player
+
+        delete el.dataset.yt
+
+      })
+
+    })
+
+  }
+
+
+  get_value(obj, keys) {
+    if (typeof obj === 'string') return obj
+    keys.forEach(k => {
+      if (obj.hasOwnProperty(k)) obj = obj[k]
+      else obj = `Key <span style="color: tomato">${k}</span> not found`
+    })
+    return obj
+  }
+
+
+  static get_video_id(url) {
+    url = url.replace(/([><])/gi, '').split(/(vi\/|v=|\/v\/|youtu\.be\/|\/embed\/)/)
+    if (url[2] !== undefined) return url[2].split(/[^0-9a-z_\-]/i)[0]
+    else return url
+  }
+
+}
+exports.YT = YT
+
+class MainNavigation {
+
+    constructor(selector) {
+        this.main_menu = document.querySelector(selector)
+
+        if (! this.main_menu) return
+
+        this.parent_links = []
+        this.set_parent_links()
+        this.add_arrows()
+        this.sub_menu()
+        MainNavigation.mark()
+
+        this.main_menu.addEventListener('click', (e) => {
+            e.stopPropagation()
+        })
+    }
+
+
+    set_parent_links() {
+        this.main_menu.querySelectorAll('li ul').forEach((el) => {
+            this.parent_links.push(el.parentNode.firstChild)
+        })
+    }
+
+
+    add_arrows() {
+        this.parent_links.forEach((link) => {
+            link.appendChild(document.createElement('span'))
+        })
+    }
+
+
+    show_sub_menu() {
+        this.parent_links.forEach((link) => {
+            let counter = 1
+            link.addEventListener('click', (e) => {
+
+                e.currentTarget.parentNode.parentNode.querySelectorAll('li').forEach((el) => {
+                    if (e.currentTarget.parentNode !== el) el.classList.remove('show')
+                })
+
+                if (link.parentNode.classList.contains('show')) counter++
+
+                if (counter === 1) {
+                    e.preventDefault()
+                    link.parentNode.classList.add('show')
+                } else counter = 0
+            })
+        })
+    }
+
+
+    hide_sub_menu() {
+        this.parent_links.forEach((link) => { link.parentNode.classList.remove('show') })
+    }
+
+
+    sub_menu() {
+        document.addEventListener('click', () => {
+            this.hide_sub_menu()
+            this.show_sub_menu.counter = 0
+        })
+        this.show_sub_menu()
+    }
+
+
+    static mark() {
+        document.querySelectorAll('li.mark a').forEach((el) => {
+            el.innerHTML = `<div>${el.innerHTML}</div>`
+        })
+    }
+
+}
+exports.MainNavigation = MainNavigation
+
+exports.Declension = (num, ...words) => {
     // Ex: el.innerHtml = declension(parseInt(comments_count), 'comment', 'comments')
     // => 0 comments | 1 comment | 2 comments | etc...
     let _default = 'no_word'
@@ -13,8 +297,8 @@ exports.declension = (num, ...words) => {
     return words[index]
 }
 
-exports.autoExpandTextarea = () => {
-    // Ex: <textarea data-auto-expand data-max-heigh="200"></textarea>
+exports.AutoExpandTextarea = () => {
+    // Ex: <textarea data-auto-expand data-max-height="200"></textarea>
     // data-max-height is optional
     document.querySelectorAll('textarea[data-auto-expand]').forEach((el) => {
 
@@ -44,53 +328,6 @@ exports.autoExpandTextarea = () => {
 
         el.addEventListener('input', () => expand())
     })
-}
-
-exports.YTGetID = (url) => {
-    let id
-    url = url.replace(/([><])/gi,'').split(/(vi\/|v=|\/v\/|youtu\.be\/|\/embed\/)/)
-    if (url[2] !== undefined) {
-        id = url[2].split(/[^0-9a-z_\-]/i)
-        id = id[0]
-    }
-    else id = url
-    return id
-}
-
-exports.YTGetImage = (url) => {
-    let id = module.exports.YTGetID(url)
-    if (!id) return
-    return `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`
-}
-
-exports.YTGetEmbed = (url) => {
-    let id = module.exports.YTGetID(url)
-    if (!id) return
-    return `https://www.youtube.com/embed/${id}`
-}
-
-exports.YTGetInfo = (url, api_key, callback = () => {}) => {
-    let id = module.exports.YTGetID(url)
-    if (!id) return
-    url = `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${id}&key=${api_key}`
-
-    let request = new XMLHttpRequest()
-    request.open('GET', url, true)
-
-    request.onload = function() {
-        if (request.status >= 200 && request.status < 400) {
-            // Success!
-            callback(JSON.parse(request.responseText))
-        } else {
-            // We reached our target server, but it returned an error
-        }
-    }
-
-    request.onerror = function() {
-        // There was a connection error of some sort
-    }
-
-    request.send()
 }
 
 exports.Ripple = (selector) => {

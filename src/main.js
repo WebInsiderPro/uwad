@@ -15,6 +15,12 @@ import './img/share.jpg'
 
 import './scss/main.scss'
 
+// These imports are needed to automatically reload page after changes saved
+// Templates
+import '../templates/base.html'
+// Blog Templates
+import '../blog/templates/blog/home.html'
+
 if (document.getElementById('app'))
   new Vue({
     el: '#app',

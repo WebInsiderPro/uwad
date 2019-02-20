@@ -4,11 +4,16 @@
     <h1>{{ msg }}</h1>
     <p>Unreal Web-Applications Development</p>
     <h2>Essential Links</h2>
-    <ul>
+    <ul class="mm">
       <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
       <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
       <li><a href="https://chat.vuejs.org" target="_blank">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
+      <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a>
+        <ul>
+          <li>test</li>
+          <li>test</li>
+          <li>test</li>
+        </ul></li>
     </ul>
     <h2>Ecosystem</h2>
     <ul>

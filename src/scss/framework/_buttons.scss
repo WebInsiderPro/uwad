@@ -1,4 +1,4 @@
-.btn {
+body *.btn {
 	display: inline-flex;
 	text-decoration: none;
 	background-color: #f0f0f0;
@@ -33,7 +33,7 @@
 	@each $color, $hex in $colours {
 		&-#{$color} {
 			&, &:visited {
-				@include contrast($hex, true);
+				color: contrast($hex, $body__color, white);
 			}
 			background-color: $hex;
 		}
@@ -50,7 +50,7 @@
 				}
 				&:hover {
 					background-color: $hex;
-					@include contrast($hex, true);
+					color: contrast($hex, $body__color, white);
 				}
 			}
 			&:active {
