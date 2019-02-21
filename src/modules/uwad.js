@@ -207,6 +207,7 @@ class YT {
 exports.YT = YT
 
 class MainNavigation {
+    // Ex: new MainNavigation('.main-navigation')
 
     constructor(selector) {
         this.main_menu = document.querySelector(selector)
