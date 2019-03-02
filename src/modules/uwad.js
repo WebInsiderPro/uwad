@@ -1,8 +1,9 @@
 class YT {
 
-  constructor(API_KEY) {
+  constructor(API_KEY, TIME_FORMAT = '{H*:}{M*:}{S}') {
 
     this.API_KEY = API_KEY
+    this.TIME_FORMAT = TIME_FORMAT
     this.channels = {}
 
     this.video_render()
@@ -21,6 +22,7 @@ class YT {
       let video = data.items[0]
       video.embed = `https://www.youtube.com/embed/${id}`
       video.url = `https://www.youtube.com/watch?v=${id}`
+      if (this.TIME_FORMAT) video['contentDetails'].duration = this.timeFormat(video['contentDetails'].duration)
       this.channel(video['snippet']['channelId'], (channel) => {
         callback({ channel, video })
       })
@@ -117,7 +119,7 @@ class YT {
                   })
 
                   // HashTags
-                  let hash_regex = /(#[a-zа-я]+)/gi
+                  let hash_regex = /(#[a-zа-я0-9_]+)/gi
                   cnt = cnt.replace(hash_regex, (m) => {
                     return `<a href="https://www.youtube.com/results?search_query=${m.replace('#', '%23')}" target="_blank"">${m}</a>`
                   })
@@ -201,6 +203,31 @@ class YT {
     url = url.replace(/([><])/gi, '').split(/(vi\/|v=|\/v\/|youtu\.be\/|\/embed\/)/)
     if (url[2] !== undefined) return url[2].split(/[^0-9a-z_\-]/i)[0]
     else return url
+  }
+
+  timeFormat (timeISO) {
+    let H = parseInt(timeISO.match(/([\d]+[H]+)/g)) || ''
+    let M = parseInt(timeISO.match(/([\d]+[M]+)/g)) || ''
+    let S = parseInt(timeISO.match(/([\d]+[S]+)/g)) || ''
+
+    let duration = this.TIME_FORMAT
+
+    let h_rgx = /({H)(\*)*([^}]*)(})/ig
+    if (duration.match(h_rgx)) {
+      duration = H ? duration.replace(h_rgx, H + '$3') : duration.replace(h_rgx, '')
+    }
+
+    let m_rgx = /({M)(\*)*([^}]*)(})/ig
+    if (duration.match(m_rgx)) {
+      duration = M ? duration.replace(m_rgx, M + '$3') : duration.replace(m_rgx, '')
+    }
+
+    let s_rgx = /({S)(\*)*([^}]*)(})/ig
+    if (duration.match(s_rgx)) {
+      duration = S ? duration.replace(s_rgx, S + '$3') : duration.replace(s_rgx, '')
+    }
+
+    return duration.trim()
   }
 
 }
