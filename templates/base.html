@@ -40,10 +40,13 @@
         <!-- Content's Here -->
         {% block content %}<div id="app"></div>{% endblock %}
 
+        <!-- Custom Footer Stuff -->
+        {% block footer_area %}{% endblock %}
+
         <!-- Load CSS and JS -->
         {% render_bundle 'main' %}
 
-        <!-- Custom Footer Stuff -->
-        {% block footer_area %}{% endblock %}
+        <!-- Custom Footer Scripts -->
+        {% block extra_scripts %}{% endblock %}
     </body>
 </html>
